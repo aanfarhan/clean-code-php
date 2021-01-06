@@ -1,43 +1,43 @@
 # Clean Code PHP
 
-## Table of Contents
+## Daftar isi
 
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-     * [Use meaningful and pronounceable variable names](#use-meaningful-and-pronounceable-variable-names)
-     * [Use the same vocabulary for the same type of variable](#use-the-same-vocabulary-for-the-same-type-of-variable)
-     * [Use searchable names (part 1)](#use-searchable-names-part-1)
-     * [Use searchable names (part 2)](#use-searchable-names-part-2)
-     * [Use explanatory variables](#use-explanatory-variables)
-     * [Avoid nesting too deeply and return early (part 1)](#avoid-nesting-too-deeply-and-return-early-part-1)
-     * [Avoid nesting too deeply and return early (part 2)](#avoid-nesting-too-deeply-and-return-early-part-2)
-     * [Avoid Mental Mapping](#avoid-mental-mapping)
-     * [Don't add unneeded context](#dont-add-unneeded-context)
-     * [Use default arguments instead of short circuiting or conditionals](#use-default-arguments-instead-of-short-circuiting-or-conditionals)
-  3. [Comparison](#comparison)
-     * [Use identical comparison](#use-identical-comparison)
-     * [Null coalescing operator](#null-coalescing-operator)
-  4. [Functions](#functions)
-     * [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
-     * [Function names should say what they do](#function-names-should-say-what-they-do)
-     * [Functions should only be one level of abstraction](#functions-should-only-be-one-level-of-abstraction)
-     * [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
-     * [Avoid Side Effects](#avoid-side-effects)
-     * [Don't write to global functions](#dont-write-to-global-functions)
-     * [Don't use a Singleton pattern](#dont-use-a-singleton-pattern)
-     * [Encapsulate conditionals](#encapsulate-conditionals)
-     * [Avoid negative conditionals](#avoid-negative-conditionals)
-     * [Avoid conditionals](#avoid-conditionals)
-     * [Avoid type-checking (part 1)](#avoid-type-checking-part-1)
-     * [Avoid type-checking (part 2)](#avoid-type-checking-part-2)
-     * [Remove dead code](#remove-dead-code)
-  5. [Objects and Data Structures](#objects-and-data-structures)
-     * [Use object encapsulation](#use-object-encapsulation)
-     * [Make objects have private/protected members](#make-objects-have-privateprotected-members)
-  6. [Classes](#classes)
-     * [Prefer composition over inheritance](#prefer-composition-over-inheritance)
-     * [Avoid fluent interfaces](#avoid-fluent-interfaces)
-     * [Prefer final classes](#prefer-final-classes)
+  1. [Pengenalan](#pengenalan)
+  2. [Variabel](#variabel)
+     * [Penamaan variabel harus mudah dibaca dan dimengerti](#gunakan-kosakata-yang-sama-untuk-variabel-sejenis)
+     * [Gunakan kosakata yang sama untuk variabel sejenis](#use-the-same-vocabulary-for-the-same-type-of-variable)
+     * [Nama variabel harus mudah dicari (part 1)](#nama-variabel-harus-mudah-dicari-part-1)
+     * [Nama variabel harus mudah dicari (part 2)](#nama-variabel-harus-mudah-dicari-part-2)
+     * [Nama variabel harus deskriptif](#nama-variabel-harus-deskriptif)
+     * [Hindari return berjenjang yang terlalu dalam (part 1)](#hindari-return-berjenjang-yang-terlalu-dalam-part-1)
+     * [Hindari return berjenjang yang terlalu dalam (part 2)](#hindari-return-berjenjang-yang-terlalu-dalam-part-2)
+     * [Hindari Mental Mapping](#hindari-mental-mapping)
+     * [Jangan menambahkan konteks yang tidak diperlukan](#jangan-menambahkan-konteks-yang-tidak-diperlukan)
+     * [Gunakan nilai default parameter](#gunakan-nilai-default-parameter)
+  3. [Perbandingan](#perbandingan)
+     * [Gunakan perbandingan identik](#gunakan-perbandingan-identik)
+     * [Gunakan operator coalescing untuk pengecekkan NULL](#gunakan-operator-coalescing-untuk-pengecekkan-null)
+  4. [Fungsi](#fungsi)
+     * [Batasi jumlah parameter dalam fungsi maksimal 2 (Lebih sedikit lebih baik)](#batasi-jumlah-parameter-dalam-fungsi-maksimal-2)
+     * [Nama fungsi harus menjelaskan apa yang dilakukan fungsi tersebut](#nama-fungsi-harus-menjelaskan-apa-yang-dilakukan-fungsi-tersebut)
+     * [Fungsi hanya boleh 1 level abstraksi](#fungsi-hanya-boleh-1-level-abstraksi)
+     * [Jangan memakai flags sebagai parameter dalam fungsi](#jangan-memakai-flags-sebagai-parameter-dalam-fungsi)
+     * [Hindari efek samping pada suatu fungsi](#hindari-efek-samping-pada-suatu-fungsi)
+     * [Jangan membuat fungsi global](#jangan-membuat-fungsi-global)
+     * [Jangan pakai Singleton pattern](#jangan-pakai-singleton-pattern)
+     * [Enkapsulasi kondisi](#enkapsulasi-kondisi)
+     * [Hindari kondisi negatif](#hindari-kondisi-negatif)
+     * [Hindari menggunakan terlalu banyak kondisi](#hindari-menggunakan-terlalu-banyak-kondisi)
+     * [Hindari pengecekkan tipe object (part 1)](#avoid-type-checking-part-1)
+     * [Hindari pengecekkan tipe object (part 2)](#avoid-type-checking-part-2)
+     * [Hapus kode yang tidak terpakai](#hapus-kode-yang-tidak-terpakai)
+  5. [Object dan Struktur Data](#object-dan-struktur-data)
+     * [Gunakan Enkapsulasi Object](#gunakan-enkapsulasi-object)
+     * [Buat object memiliki atribut private atau protected](#buat-object-memiliki-atribut-private-atau-protected)
+  6. [Class](#classes)
+     * [Lebih baik menggunakan composition daripada inheritance](#lebih-baik-menggunakan-composition-daripada-inheritance)
+     * [Hindari membuat interface yang fleksibel](#hindari-membuat-interface-yang-fleksibel)
+     * [Lebih baik membuat class final](#lebih-baik-membuat-class-final)
   7. [SOLID](#solid)
      * [Single Responsibility Principle (SRP)](#single-responsibility-principle-srp)
      * [Open/Closed Principle (OCP)](#openclosed-principle-ocp)
@@ -45,22 +45,20 @@
      * [Interface Segregation Principle (ISP)](#interface-segregation-principle-isp)
      * [Dependency Inversion Principle (DIP)](#dependency-inversion-principle-dip)
   8. [Don’t repeat yourself (DRY)](#dont-repeat-yourself-dry)
-  9. [Translations](#translations)
+  9. [Terjemahan](#terjemahan)
 
-## Introduction
+## Pengenalan
 
-Software engineering principles, from Robert C. Martin's book
+Prinsip Pembuatan Aplikasi, dari buku Robert C. Martin (Uncle Bob)
 [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for PHP. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in PHP.
+didaptasi untuk bahasa pemrograman PHP. Ini bukan merupakan Style Guide. Melainkan Guide atau Referensi agar programmer bisa membuat source code aplikasi yang lebih mudah dibaca, digunakan kembali, dan mudah dipelihara.
 
 Not every principle herein has to be strictly followed, and even fewer will be universally
-agreed upon. These are guidelines and nothing more, but they are ones codified over many
-years of collective experience by the authors of *Clean Code*.
+agreed upon Anda tidak harus mengikuti ataupun setuju dengan semua prinsip-prinsip yang tertulis di sini. Akan tetapi ini hanya referensi berdasarkan pengalaman dari penulis buku *Clean Code*.
 
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+Terinspirasi dari [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
 
-Although many developers still use PHP 5, most of the examples in this article only work with PHP 7.1+.
+Meskipun masih banyak programmer yang menggunakan PHP versi 5, akan tetapi contoh code di sini kebanyakan menggunakan PHP versi 7.1+.
 
 ## Variables
 
@@ -82,7 +80,7 @@ declare(strict_types=1);
 $currentDate = $moment->format('y-m-d');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Use the same vocabulary for the same type of variable
 
@@ -105,7 +103,7 @@ declare(strict_types=1);
 getUser();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Use searchable names (part 1)
 
@@ -180,7 +178,7 @@ if ($user->access & User::ACCESS_UPDATE) {
 $user->access ^= User::ACCESS_CREATE;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Use explanatory variables
 
@@ -225,7 +223,7 @@ preg_match($cityZipCodeRegex, $address, $matches);
 saveCityZipCode($matches['city'], $matches['zipCode']);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid nesting too deeply and return early (part 1)
 
@@ -274,7 +272,7 @@ function isShopOpen(string $day): bool
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid nesting too deeply and return early (part 2)
 
@@ -317,7 +315,7 @@ function fibonacci(int $n): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid Mental Mapping
 
@@ -358,7 +356,7 @@ foreach ($locations as $location) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Don't add unneeded context
 
@@ -399,7 +397,7 @@ class Car
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Use default arguments instead of short circuiting or conditionals
 
@@ -437,7 +435,7 @@ function createMicrobrewery(string $breweryName = 'Hipster Brew Co.'): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ## Comparison
 
@@ -478,7 +476,7 @@ if ($a !== $b) {
 
 The comparison `$a !== $b` returns `TRUE`.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Null coalescing operator
 
@@ -505,7 +503,7 @@ declare(strict_types=1);
 $name = $_GET['name'] ?? $_POST['name'] ?? 'nobody';
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ## Functions
 
@@ -607,7 +605,7 @@ class Questionnaire
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Function names should say what they do
 
@@ -647,7 +645,7 @@ $message = new Email(...);
 $message->send();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Functions should only be one level of abstraction
 
@@ -787,7 +785,7 @@ class BetterPHPAlternative
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Don't use flags as function parameters
 
@@ -826,7 +824,7 @@ function createTempFile(string $name): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid Side Effects
 
@@ -886,7 +884,7 @@ var_dump($newName);
 // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Don't write to global functions
 
@@ -943,7 +941,7 @@ $configuration = new Configuration([
 
 And now you must use instance of `Configuration` in your application.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Don't use a Singleton pattern
 
@@ -1010,7 +1008,7 @@ $connection = new DBConnection($dsn);
 
 And now you must use instance of `DBConnection` in your application.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Encapsulate conditionals
 
@@ -1034,7 +1032,7 @@ if ($article->isPublished()) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid negative conditionals
 
@@ -1068,7 +1066,7 @@ if (isDOMNodePresent($node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid conditionals
 
@@ -1147,7 +1145,7 @@ class Cessna implements Airplane
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid type-checking (part 1)
 
@@ -1182,7 +1180,7 @@ function travelToTexas(Vehicle $vehicle): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid type-checking (part 2)
 
@@ -1222,7 +1220,7 @@ function combine(int $val1, int $val2): int
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Remove dead code
 
@@ -1263,7 +1261,7 @@ $request = requestModule($requestUrl);
 inventoryTracker('apples', $request, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 
 ## Objects and Data Structures
@@ -1341,7 +1339,7 @@ $bankAccount->withdraw($shoesPrice);
 $balance = $bankAccount->getBalance();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Make objects have private/protected members
 
@@ -1398,7 +1396,7 @@ $employee = new Employee('John Doe');
 echo 'Employee name: ' . $employee->getName();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ## Classes
 
@@ -1505,7 +1503,7 @@ class Employee
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Avoid fluent interfaces
 
@@ -1617,7 +1615,7 @@ $car->setModel('F-150');
 $car->dump();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Prefer final classes
 
@@ -1686,7 +1684,7 @@ final class Car implements Vehicle
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ## SOLID
 
@@ -1778,7 +1776,7 @@ class UserSettings
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Open/Closed Principle (OCP)
 
@@ -1896,7 +1894,7 @@ class HttpRequester
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Liskov Substitution Principle (LSP)
 
@@ -2027,7 +2025,7 @@ foreach ($shapes as $shape) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Interface Segregation Principle (ISP)
 
@@ -2122,7 +2120,7 @@ class RobotEmployee implements Workable
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ### Dependency Inversion Principle (DIP)
 
@@ -2218,7 +2216,7 @@ class Manager
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ## Don’t repeat yourself (DRY)
 
@@ -2308,7 +2306,7 @@ function showList(array $employees): void
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
 
 ## Translations
 
@@ -2334,4 +2332,4 @@ This is also available in other languages:
 * :tr: **Turkish:**
    * [anilozmen/clean-code-php](https://github.com/anilozmen/clean-code-php)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#daftar-isi)**
